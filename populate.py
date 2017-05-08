@@ -36,7 +36,7 @@ class Actor(Base):
 	def __repr__(self):
 		return "Actor({}, {})".format(self.id, self.name)
 
-
+# use whoever's database
 engine = create_engine('postgresql://martza01:@knuth.luther.edu/martza01')
 Session = sessionmaker(bind=engine)
 
@@ -48,19 +48,32 @@ with open('data.json') as jsonData:
 	d = json.load(jsonData)
 
 actor_set = set()
-title_list = []
+title_dict = {}
 
 for m in d:
-	title_list.append(m['title'])
-	for n in m['cast']:
-		actor_set.add(n)
+	for c in m['cast']:
+		actor_set.add(c)
 
 for a in actor_set:
 	new_actor = Actor(name=a)
 	db.add(new_actor)
+	title_dict[a] = new_actor
 
-for t in title_list:
-	new_title = Film(title=t)
+for m in d:
+	new_title = Film(title=m['title'], related=[title_dict[g] for g in m['cast']])
 	db.add(new_title)
+
+# for m in d:
+# 	title_list.append(m['title'])
+# 	for n in m['cast']:
+# 		actor_set.add(n)
+
+# for a in actor_set:
+# 	new_actor = Actor(name=a)
+# 	db.add(new_actor)
+
+# for t in title_list:
+# 	new_title = Film(title=t)
+# 	db.add(new_title)
 
 db.commit()
