@@ -1,11 +1,11 @@
 {% extends "bootstrap/base.html" %}
 
 {% block content %}
-	<h1>{{title}}</h1>
+	<h1>{{name}}</h1>
 	<table class="table table-striped">
-		{% for c in cast %}
+		{% for f in films %}
 			<tr>
-				<td><a href="/actor/{{c}}">{{c}}</a></td>
+				<td><a href="/film/{{f}}">{{f}}</a></td>
 			</tr>
 		{% endfor %}
 	</table>
