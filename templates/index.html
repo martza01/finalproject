@@ -2,6 +2,30 @@
 
 {% block content %}
 	<h1 class="h1">Top 250 Movies in the IMDb Database</h1>
+
+	<form action="/searchActor" method="get">
+		<div>
+			{{form.name.label}}
+			{{form.name}}
+		</div>
+
+		<div>
+			{{form.submit1}}
+		</div>
+	</form>
+
+	<form action="/searchTitle" method="get">
+		<div>
+			{{form.title.label}}
+			{{form.title}}
+		</div>
+
+		<div>
+			{{form.submit2}}
+		</div>
+	</form>
+
+
 	<table class="table table-striped">
 		{% for m in movielist %}
 			<tr>
