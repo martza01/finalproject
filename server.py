@@ -3,6 +3,7 @@ from flask_bootstrap import Bootstrap
 from flask_wtf import Form
 from wtforms import TextField, SubmitField
 import psycopg2
+import json
 import os
 import urllib.parse
 
@@ -87,6 +88,10 @@ def titleSearch():
 	print(r)
 	return render_template("results.html", s=t, movielist=r) 
 
+@app.route("/testscript")
+def testScript():
+	return render_template("testscript.html")	
+
 @app.route("/searchActor")
 def actorSearch():
 	args = request.url.split('?')[1]
@@ -156,6 +161,43 @@ def actorSearch():
 		print(x[0])
 
 	return render_template("results.html", movielist=title_list, s=searchStr)
+
+@app.route("/api/getinfo")
+def getInfo():
+	args = request.url.split('?')[1]
+	print(args)
+	t, n = args.split('&')
+	titleKeywords = t.split('=')[1]
+	nameKeywords = n.split('=')[1]
+
+	title_list = titleKeywords.split(',')
+	name_list = nameKeywords.split(',')
+
+	print(title_list)
+	print(name_list)
+
+	cur.execute('''
+				select films.title, actors.name
+				from films join film_actor on films.id = film_actor.film
+				join actors on actors.id = film_actor.actor
+				where title = ANY(%s);
+				''', (title_list,))
+
+	f = cur.fetchall()
+
+	cur.execute('''
+				select films.title, actors.name
+				from films join film_actor on films.id = film_actor.film
+				join actors on actors.id = film_actor.actor
+				where name = ANY(%s);
+				''', (name_list,))
+
+	g = cur.fetchall()
+
+	print(f)
+	print(g)
+
+	return json.dumps([f, g])
 
 if __name__ == '__main__':
 	app.run(debug=True)

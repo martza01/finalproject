@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Test Page</title>
+	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+	<script type="text/javascript">
+		"use strict";
+		function searchTest(t, n) {
+
+			$.ajax({
+				//url: `http://localhost:5000/api/getpuppy?i=${i}&q=${q}&p=${p}`,
+				url: `http://localhost:5000/api/getinfo?t=${t}&n=${n}`,
+				method: 'GET'
+			}).done(function(data) {
+				let d = JSON.parse(data);
+				console.log(d);	
+			});
+		}
+	</script>
+</head>
+<body>
+	<h1>Test Page</h1>
+</body>
+</html>
