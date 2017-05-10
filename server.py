@@ -90,12 +90,11 @@ def titleSearch():
 @app.route("/searchActor")
 def actorSearch():
 	args = request.url.split('?')[1]
-	print(args)
+	# print(args)
 	t = args.split('=')[1].split('&')[0]
 	s = [j for j in t.split('%2C+')]
 	sII = [i.replace('+', ' ') for i in s]
 
-	print(t)
 	print(sII)
 
 	filteredResults = []
@@ -147,13 +146,16 @@ def actorSearch():
 				totalResults.append(x)
 
 	title_list = [] 
+	searchStr = ""
+	for j in sII:
+		searchStr = searchStr + j + ', '
 
 	for x in totalResults:
 		if x[0] not in title_list:
 			title_list.append(x[0])
 		print(x[0])
 
-	return render_template("results.html", movielist=title_list)
+	return render_template("results.html", movielist=title_list, s=searchStr)
 
 if __name__ == '__main__':
 	app.run(debug=True)
