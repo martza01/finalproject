@@ -95,12 +95,13 @@ def actorSearch():
 	s = [j for j in t.split('%2C+')]
 	sII = [i.replace('+', ' ') for i in s]
 
+	print(t)
 	print(sII)
 
 	filteredResults = []
 	totalResults = []
 	l = []
-	if len(t) > 1:
+	if len(sII) > 1:
 		cur.execute('''
 				select films.title, actors.name
 				from films join film_actor on films.id = film_actor.film
