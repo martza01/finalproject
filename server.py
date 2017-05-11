@@ -12,7 +12,15 @@ app = Flask(__name__)
 app.secret_key = 's3cr3t'
 Bootstrap(app)
 
-conn = psycopg2.connect(dbname='martza01', user='martza01', host='knuth.luther.edu')
+url = urllib.parse.urlparse(os.environ["DATABASE_URL"])
+dbname = url.path[1:]
+user = url.username
+password = url.password
+host = url.hostname
+port = url.port
+
+
+conn = psycopg2.connect(dbname=dbname, user=user, password=password, host=host, port=port)
 cur = conn.cursor()
 
 class SearchForm(Form):
