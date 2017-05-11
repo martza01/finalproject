@@ -37,7 +37,7 @@ class Actor(Base):
 		return "Actor({}, {})".format(self.id, self.name)
 
 # use whoever's database
-engine = create_engine('postgresql://martza01:@knuth.luther.edu/martza01')
+engine = create_engine('postgres://pnrgtpqlgcszoe:dc26564d4fc0023c38def80aa0d76a18881adde8e00eff3d24aa5b20a0be10c2@ec2-54-163-254-76.compute-1.amazonaws.com:5432/d67pd9eo07qkke')
 Session = sessionmaker(bind=engine)
 
 db = Session()
